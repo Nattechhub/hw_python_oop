@@ -29,10 +29,7 @@ class Training:
     MIN_IN_HOUR: int = 60
     COEFF_CALORIE_1 = 18
     COEFF_CALORIE_2 = 20
-    K_1 = 0.035
-    K_2 = 0.029
     K_3 = 2
-    K_4 = 1.1
 
     def __init__(self,
                  action: int,
@@ -77,6 +74,9 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
+    K_1 = 0.035
+    K_2 = 0.029
+
     def __init__(self,
                  action: int, duration: float,
                  weight: float,
@@ -99,6 +99,7 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP = 1.38
+    K_4 = 1.1
 
     def __init__(self,
                  action: int,
@@ -128,8 +129,7 @@ def read_package(workout_type: str, data: List[int]) -> Training:
         "WLK": SportsWalking}
     if workout_type in train_class:
         return train_class[workout_type](*data)
-    else:
-        raise ValueError('Некорректные данные')
+    raise ValueError('Некорректные данные')
 
 
 def main(my_training: Training) -> None:
